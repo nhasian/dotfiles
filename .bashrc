@@ -15,9 +15,16 @@
 # fi
 
 alias ls='ls --color=auto'
+alias l.='ls -d .* --color=auto'
+alias ll='ls -l --color=auto'
+alias vi='vim'
+alias grep='grep --color=auto'
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+
 PS1='[\u@\h \W]\$ '
 
 export EDITOR="nano"
+HISTCONTROL=ignoreboth
 
 xset dpms 600
 

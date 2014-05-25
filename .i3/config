@@ -35,7 +35,8 @@ bindsym $mod+Shift+q kill
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id j4-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left
@@ -123,8 +124,9 @@ bindsym $mod+Shift+0 move container to workspace 10
 
 for_window [title=".* LibreOffice Writer"] floating enable; border normal
 for_window [class="Firefox"] border normal
-for_window [class="Gnome-terminal"] border none
+for_window [class="Gnome-terminal"] border normal
 for_window [class="(?i)google-chrome"] border normal
+for_window [class="(?i)google-chrome-stable"] border normal
 for_window [title="irssi"] border none
 for_window [title="htop"] border none
 for_window [class="(?i)gimp"] floating enable; border normal
@@ -133,6 +135,8 @@ for_window [class="(?i)vlc"] floating enable; border normal
 for_window [class="(?i)nautilus"] border normal
 for_window [title="File Operations"] floating enable; border normal; floating_maximum_size 150 x 100
 for_window [title="(?i)calculator"] floating enable; border normal
+# Make all urxvts use a 1-pixel border:
+for_window [class="urxvt"] border 3pixel
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -190,17 +194,21 @@ mode "$mode_system" {
 bindsym $mod+Pause mode "$mode_system"
 
 # opens file manager
-bindsym $mod+n exec nautilus /home/sabnzbd/complete
+bindsym $mod+n exec nautilus 
+
+# starts chrome with mickys profile on workspace2
+bindsym $mod+m exec --no-startup-id i3-msg 'workspace 2:Micky'; exec /usr/bin/google-chrome-stable --profile-directory="Profile 3"
 
 # AutoStart Applications
 exec /usr/bin/pa-applet
-exec /usr/bin/dropboxd
-# exec --no-startup-id /usr/bin/nm-applet
-exec /usr/bin/google-chrome --profile-directory="Default"
-# exec --no-startup-id i3-msg 'workspace 2:Micky; exec /usr/bin/google-chrome --profile-directory="Profile 3";'
+# exec /usr/bin/dropboxd
+exec --no-startup-id /usr/bin/nm-applet
+# exec /usr/bin/google-chrome-stable --profile-directory="Default"
+# exec --no-startup-id i3-msg 'workspace 2:Micky; exec /usr/bin/google-chrome-stable --profile-directory="Profile 3";'
 exec --no-startup-id i3-msg 'workspace 3:Irc; exec /usr/bin/urxvt -name irssi'
 exec --no-startup-id i3-msg 'workspace 4:Shell; exec /usr/bin/urxvt; workspace 1:Web'
 exec --no-startup-id sh ~/.fehbg
+exec --no-startup-id xflux -z 85225
 
 # starting a specially named term automatically 
 exec --no-startup-id urxvt -name scratchpad -e /usr/bin/nano
@@ -210,5 +218,6 @@ for_window [class="URxvt" instance="scratchpad"] move scratchpad
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+font pango:DejaVu Sans Mono, Icons 10
         status_command i3status
 }
